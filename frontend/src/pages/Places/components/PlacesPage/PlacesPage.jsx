@@ -1,34 +1,52 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { Table, Button } from 'antd'
+import { Table, Button, Upload } from 'antd'
 import { Link } from 'react-router-dom'
 import { PLACES_TABLE_COLUMNS } from './PlacesPage.consts'
 import { LoaderContext } from '../../../../core/context'
 import { ROUTE_NAMES } from '../../../../routing/routeNames.const'
 import { ContentTitle, PageContent, ButtonsToolbar } from '../../../../shared/components'
+import { UploadOutlined } from '@ant-design/icons'
+import { LegendsService } from '../../../../core/api'
 
 export const PlacesPage = React.memo(() => {
     const { setLoaderState } = useContext(LoaderContext)
     const [dictionary, setDictionary] = useState([])
 
     /**
-     * Запрос справочника
+     * Обработчик загрузки файла
      */
-    const dictionaryFetch = useCallback(async () => {
+    const handleUploadAttachment = useCallback(async ({ file, onSuccess, onError }) => {
         try {
             setLoaderState(true)
 
-            console.log('Запрос за таблицей услуг для Алисы')
-            setDictionary([])
+            const upload = await LegendsService.uploadFile({
+                file,
+            })
+
+            onSuccess(upload, file)
         } catch (e) {
-            console.log(e)
+            onError(e)
         } finally {
             setLoaderState(false)
         }
     }, [setLoaderState])
 
     useEffect(() => {
+        const dictionaryFetch = async () => {
+            try {
+                setLoaderState(true)
+
+                console.log('Запрос за таблицей услуг для Алисы')
+                setDictionary([])
+            } catch (e) {
+                console.log(e)
+            } finally {
+                setLoaderState(false)
+            }
+        }
+
         dictionaryFetch()
-    }, [dictionaryFetch])
+    }, [setLoaderState])
 
     return (
         <PageContent>
@@ -38,7 +56,9 @@ export const PlacesPage = React.memo(() => {
                         <Button>Добавить</Button>
                     </Link>
 
-                    <Button>Загрузить файл</Button>
+                    <Upload customRequest={handleUploadAttachment} showUploadList={false}>
+                        <Button icon={<UploadOutlined/>}>Загрузить</Button>
+                    </Upload>
                 </ButtonsToolbar>
             </ContentTitle>
 
