@@ -1,0 +1,11 @@
+@import 'core/fonts/stylesheet';
+
+@import 'core/styles/consts';
+@import 'core/styles/theme';
+
+@import 'core/styles/typography';
+@import 'core/styles/scroll';
+
+body {
+  background: var(--g_main_background);
+}

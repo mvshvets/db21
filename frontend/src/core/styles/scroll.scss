@@ -1,0 +1,21 @@
+$scroll_width: 6px;
+$scroll_height: 6px;
+
+$scroll_track: #EDEDED;
+$scroll_thumb: #CBCBCB;
+$scroll_border_radius: 6px;
+
+::-webkit-scrollbar {
+    width: $scroll_width;
+    height: $scroll_height;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: $scroll_border_radius;
+    background: $scroll_track;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: $scroll_border_radius;
+    background: $scroll_thumb;
+}

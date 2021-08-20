@@ -1,0 +1,55 @@
+@import 'consts';
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+a {
+    font-size: 12px;
+    text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    color: var(--g_main_text);
+}
+
+p, div, tr, th, span{
+    margin: 0;
+    font-size: 12px;
+    color: var(--g_main_text);
+}
+
+@media screen and (max-width: $g_screen_md) {
+    h1 {
+        font-size: 21px;
+    }
+
+    h2 {
+        font-size: 19px;
+    }
+
+    h3 {
+        font-size: 17px;
+    }
+}
+
+@media screen and (max-width: $g_screen_sm) {
+    h1 {
+        font-size: 19px;
+    }
+
+    h2 {
+        font-size: 17px;
+    }
+
+    h3 {
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: $g_screen_xl){
+    a, div, tr, th, span, p {
+        font-size: 14px;
+    }
+}

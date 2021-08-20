@@ -1,0 +1,19 @@
+@import 'src/core/styles/consts';
+
+.header {
+    display: flex;
+    justify-content: space-between;
+
+    &__logo {
+        color: #d0d0d0;
+
+        h1 {
+            font-size: 36px;
+            font-style: italic;
+        }
+    }
+
+    a {
+        font-size: 20px;
+    }
+}
