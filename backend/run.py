@@ -9,7 +9,7 @@ from routes import legends
 
 metadata.create_all(engine)
 
-app = FastAPI(title="Легенда API")
+app = FastAPI(title="Легенда API", root_path_in_servers=False)
 
 
 @app.on_event("startup")

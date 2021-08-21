@@ -2,8 +2,11 @@ import { axiosInstance } from './api.utils'
 import { instance } from './api.consts'
 
 export const LegendsService = {
-    /** Регистрация */
-    getLegends: (data) => axiosInstance(instance.post('/get', data)),
+    /** Получить список легенд */
+    getLegends: () => axiosInstance(instance.get('/legends/get-all')),
+
+    /** Получить легенду по ID */
+    getLegend: ({ id }) => axiosInstance(instance.get(`/legends/get/${id}`)),
 
     /** Загрузка файла */
     uploadFile: (data) => {

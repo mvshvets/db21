@@ -15,7 +15,7 @@ export const Header = React.memo(() => {
                <h1>КС</h1>
            </NavLink>
 
-            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
+            <Menu theme="dark" mode="horizontal">
                 <Menu.Item key="1">
                     <NavLink to={ROUTE_NAMES.MAIN}>
                         Карта

@@ -36,7 +36,7 @@ export const PlacesPage = React.memo(() => {
             try {
                 setLoaderState(true)
 
-                setDictionary([])
+                setDictionary(await LegendsService.getLegends())
             } catch (e) {
                 console.log(e)
             } finally {
