@@ -26,13 +26,14 @@ async def get_legends():
     legends = await LegendDB.search()
     municipalities = await MunicipalityDB.search()
     response = list()
-    for legend in legends:
-        for municipality in municipalities:
-            if legend.get("municipality_id") == municipality.get("id"):
-                tmp = legend.copy()
-                tmp["municipality"] = municipality.get("name")
-                response.append(tmp)
-    return response
+    if legends:
+        for legend in legends:
+            for municipality in municipalities:
+                if legend.get("municipality_id") == municipality.get("id"):
+                    tmp = legend.copy()
+                    tmp["municipality"] = municipality.get("name")
+                    response.append(tmp)
+        return response
 
 
 @router.post("/upload-file", name="Сохранить легенды файлом")
