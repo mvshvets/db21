@@ -1,12 +1,12 @@
 import './PlacesForm.scss'
 
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { Button, Col, Form, Input, Row } from 'antd'
+import { Button, Col, Form, Input, Row, Select, TreeSelect } from 'antd'
 import { Link, useParams } from 'react-router-dom'
 import { LoaderContext } from '../../../../core/context'
 import { ROUTE_NAMES } from '../../../../routing/routeNames.const'
 import { PageContent, ContentTitle, ButtonsToolbar } from '../../../../shared/components'
-import { block } from './PlacesForm.consts'
+import { block, LEGEND_TYPES } from './PlacesForm.consts'
 
 export const PlacesForm = React.memo(initialState => {
     const { setLoaderState } = useContext(LoaderContext)
@@ -80,10 +80,7 @@ export const PlacesForm = React.memo(initialState => {
                         {urlParams.id ? 'Изменить' : 'Создать'}
                     </Button>
 
-                    <Link
-                        to={ROUTE_NAMES.PLACES}
-                        className="like-button"
-                    >
+                    <Link to={ROUTE_NAMES.PLACES}>
                         <Button>Отмена</Button>
                     </Link>
                 </ButtonsToolbar>
@@ -94,33 +91,51 @@ export const PlacesForm = React.memo(initialState => {
                 form={form}
                 onFinish={handleFinish}
                 initialValues={initialValuesForEdit}
+                layout="vertical"
             >
-                <Row>
-                    <Col>
+                <Row gutter={20}>
+                    <Col xs={12}>
                         <Form.Item
-                            name="name"
-                            label="Название услуги"
-                            labelAlign="left"
+                            name="municipality"
+                            label="Муниципальное образование"
                         >
                             <Input/>
+                        </Form.Item>
+
+                        <Form.Item
+                            name="type"
+                            label="Тип легенды"
+                        >
+                            <TreeSelect
+                                showSearch
+                                treeData={LEGEND_TYPES}
+                                treeCheckable
+                            />
+                        </Form.Item>
+
+
+                        <Form.Item
+                            name="documents"
+                            label="Подтверждающие документы"
+                        >
+                            <Input.TextArea autoSize={{ minRows: 5, maxRows: 5 }}/>
+                        </Form.Item>
+
+
+                        <Form.Item
+                            name="informant"
+                            label="Сведения об информантах "
+                        >
+                            <Input.TextArea autoSize={{ minRows: 5, maxRows: 5 }}/>
                         </Form.Item>
                     </Col>
 
-                    <Col>
+                    <Col xs={12}>
                         <Form.Item
-                            name="to"
-                            label="Место подачи документов"
-                            labelAlign="left"
+                            name="description"
+                            label="Описание"
                         >
-                            <Input/>
-                        </Form.Item>
-
-                        <Form.Item
-                            name="comment"
-                            label="Комментарии"
-                            labelAlign="left"
-                        >
-                            <Input.TextArea autoSize={{ minRows: 7, maxRows: 15 }}/>
+                            <Input.TextArea autoSize={{ minRows: 21, maxRows: 21 }}/>
                         </Form.Item>
                     </Col>
                 </Row>

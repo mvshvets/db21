@@ -36,7 +36,6 @@ export const PlacesPage = React.memo(() => {
             try {
                 setLoaderState(true)
 
-                console.log('Запрос за таблицей услуг для Алисы')
                 setDictionary([])
             } catch (e) {
                 console.log(e)
