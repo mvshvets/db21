@@ -1,7 +1,9 @@
+import './PlacesPage.scss'
+
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Table, Button, Upload } from 'antd'
 import { Link } from 'react-router-dom'
-import { PLACES_TABLE_COLUMNS } from './PlacesPage.consts'
+import { block, PLACES_TABLE_COLUMNS } from './PlacesPage.consts'
 import { LoaderContext } from '../../../../core/context'
 import { ROUTE_NAMES } from '../../../../routing/routeNames.const'
 import { ContentTitle, PageContent, ButtonsToolbar } from '../../../../shared/components'
@@ -12,6 +14,21 @@ import { LegendsService } from '../../../../core/api'
 export const PlacesPage = React.memo(() => {
     const { setLoaderState } = useContext(LoaderContext)
     const [dictionary, setDictionary] = useState([])
+
+    /**
+     * Запрос данных для таблицы
+     */
+    const dictionaryFetch = useCallback(async () => {
+        try {
+            setLoaderState(true)
+
+            setDictionary(await LegendsService.getLegends())
+        } catch (e) {
+            console.log(e)
+        } finally {
+            setLoaderState(false)
+        }
+    }, [setLoaderState])
 
     /**
      * Обработчик загрузки файла
@@ -25,31 +42,20 @@ export const PlacesPage = React.memo(() => {
             })
 
             onSuccess(upload, file)
+            dictionaryFetch()
         } catch (e) {
             onError(e)
         } finally {
             setLoaderState(false)
         }
-    }, [setLoaderState])
+    }, [setLoaderState, dictionaryFetch])
 
     useEffect(() => {
-        const dictionaryFetch = async () => {
-            try {
-                setLoaderState(true)
-
-                setDictionary(await LegendsService.getLegends())
-            } catch (e) {
-                console.log(e)
-            } finally {
-                setLoaderState(false)
-            }
-        }
-
         dictionaryFetch()
-    }, [setLoaderState])
+    }, [dictionaryFetch])
 
     return (
-        <PageContent>
+        <PageContent className={block()}>
             <ContentTitle title="Легенды">
                 <ButtonsToolbar>
                     <Link to={ROUTE_NAMES.PLACES_CREATE}>
@@ -66,7 +72,6 @@ export const PlacesPage = React.memo(() => {
                 rowKey="id"
                 columns={PLACES_TABLE_COLUMNS}
                 dataSource={dictionary}
-                pagination={false}
             />
         </PageContent>
     )

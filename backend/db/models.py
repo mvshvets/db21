@@ -19,12 +19,12 @@ class LegendsTypes(str, Enum):
 class LegendDataModel(BaseModel):
     id: int
     create_date: int
-    name: str
-    type: LegendsTypes
-    description: str
+    name: Optional[str]
+    type: Optional[LegendsTypes]
+    description: Optional[str]
     documents: Optional[str]
     informant: Optional[str]
-    municipality_id: int
+    municipality_id: Optional[int]
     audio_guide_id: Optional[int]
     lat: Optional[float]
     long: Optional[float]
@@ -37,6 +37,8 @@ class MunicipalityDataModel(BaseModel):
     id: int
     create_date: int
     name: str
+    lat: float
+    long: float
 
     class Config:
         orm_mode = True

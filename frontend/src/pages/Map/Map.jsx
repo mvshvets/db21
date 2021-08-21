@@ -27,14 +27,14 @@ export const Map = () => {
     }, [setLoaderState])
 
     return (
-        <MapContainer center={[58.2, 33]} zoom={8}>
+        <MapContainer center={[58.2, 32.5]} zoom={8}>
             <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {marketsData?.map(el => (
-                <MarkerWithDrawer {...el}/>
-            ))}
+            {marketsData?.map(({ lat, long, ...el }) => lat && long ? (
+                <MarkerWithDrawer {...el} key={el.id} lat={lat} long={long}/>
+            ) : undefined)}
         </MapContainer>
     )
 }

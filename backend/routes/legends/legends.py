@@ -1,7 +1,10 @@
-from fastapi import APIRouter, UploadFile, File
+import io
+import re
 
+from fastapi import APIRouter, UploadFile, File
+from docx import Document
 from db.crud import LegendDB, MunicipalityDB
-from routes.legends.models import LegendResponseModel, LegendSaveRequestModel
+from routes.legends.models import LegendResponseModel, LegendSaveRequestModel, types_list
 
 router = APIRouter(prefix="/legends", tags=["Legends"])
 
@@ -40,11 +43,33 @@ async def get_legends():
 
 
 @router.post("/upload-file", name="Сохранить легенды файлом")
-async def set_file(file: UploadFile = File(...)):
+async def set_file(file: bytes = File(...)):
     """ Сохранить легенды файлом """
-    contents = await file.read()
+    document = Document(io.BytesIO(file))
+    for table in document.tables:
+        for row in table.rows:
+            if re.match("[0-9.]+$", row.cells[0].paragraphs[0].text):
+                municipality = row.cells[1].paragraphs[0].text.strip().capitalize()
+                result = await MunicipalityDB.get(name=municipality)
+                if not result:
+                    # Сохраняем новый муниципалитет, если его нет в БД
+                    await MunicipalityDB.create(name=municipality, lat=58, long=32)
+                    result = await MunicipalityDB.get(name=municipality)
+                count = -1
+                legend_cells = row.cells[2:11]
+                info_cells = row.cells[11:]
+                for cell in legend_cells:
+                    count += 1
+                    for para in cell.paragraphs:
+                        if para.text and not re.match("[-]+$", para.text.strip()):
+                            # Сохраняем легенду
+                            await LegendDB.create(municipality_id=result.get("id"),
+                                                  documents=''.join(p.text for p in info_cells[0].paragraphs),
+                                                  description=para.text.strip().capitalize(), type=types_list[count],
+                                                  informant=''.join(p.text for p in info_cells[1].paragraphs),
+                                                  lat=result.get("lat", 58), long=result.get("long", 32))
 
-    return {"filename": file.filename}
+    return
 
 
 @router.post("/upload-audio-file", name="Загрузка файла для аудиогида")

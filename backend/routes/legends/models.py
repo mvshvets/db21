@@ -19,3 +19,16 @@ class LegendSaveRequestModel(BaseModel):
     audio_guide_id: Optional[int]
     lat: float
     long: float
+
+
+types_list = [
+    LegendsTypes.LEGEND,
+    LegendsTypes.STORY,
+    LegendsTypes.TALE,
+    LegendsTypes.BYLICHKI,
+    LegendsTypes.FOLKLORE_OTHER,
+    LegendsTypes.LAKE,
+    LegendsTypes.SOURCE,
+    LegendsTypes.STONE,
+    LegendsTypes.OBJECT_OTHER,
+]
