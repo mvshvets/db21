@@ -9,7 +9,10 @@ router = APIRouter(prefix="/legends", tags=["Legends"])
 @router.get("/get/{item_id}", response_model=LegendResponseModel, name="Получить легенду по ID")
 async def get_legend(item_id: int):
     """ Получить легенду по ID """
-    response = await LegendDB.get(id=item_id)
+    legend = await LegendDB.get(id=item_id)
+    municipality = await MunicipalityDB.get(id=legend.get("municipality_id"))
+    response = legend.copy()
+    response["municipality"] = municipality.get("name")
     return response
 
 
