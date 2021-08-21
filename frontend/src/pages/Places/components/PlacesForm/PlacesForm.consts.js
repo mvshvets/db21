@@ -3,49 +3,47 @@ import { cn } from '../../../../core/config'
 export const block = cn('places-form')
 
 export const LEGEND_TYPES = [{
-    value: 'folklore',
     key: 'folklore',
-    title: 'Уникальные образцы устного народного творчества, место бытования',
+    label: 'Уникальные образцы устного народного творчества, место бытования',
     children: [{
         value: 'legend',
-        title: 'Легенда',
+        label: 'Легенда',
         key: 'Легенда'
     }, {
         value: 'story',
-        title: 'Предание',
+        label: 'Предание',
         key: 'Легенда'
     }, {
         value: 'tale',
-        title: 'Сказка',
+        label: 'Сказка',
         key: 'tale'
     }, {
         value: 'bylichki',
-        title: 'Быличка',
+        label: 'Быличка',
         key: 'bylichki'
     }, {
         value: 'folklore_other',
-        title: 'другое',
+        label: 'другое',
         key: 'folklore_other'
     }]
 }, {
-    value: 'object',
     key: 'object',
-    title: 'Уникальные природные объекты, место нахождения',
+    label: 'Уникальные природные объекты, место нахождения',
     children: [{
-        type: 'lake',
-        title: 'Озеро',
+        value: 'lake',
+        label: 'Озеро',
         key: 'lake'
     }, {
-        type: 'source',
-        title: 'Источник',
+        value: 'source',
+        label: 'Источник',
         key: 'source'
     }, {
-        type: 'stone',
-        title: 'Камень',
+        value: 'stone',
+        label: 'Камень',
         key: 'stone'
     }, {
-        type: 'object_other',
-        title: 'Другое',
+        value: 'object_other',
+        label: 'Другое',
         key: 'object_other'
     }]
 }]

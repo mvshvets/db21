@@ -8,6 +8,8 @@ import { ROUTE_NAMES } from '../../../../routing/routeNames.const'
 import { PageContent, ContentTitle, ButtonsToolbar } from '../../../../shared/components'
 import { block, LEGEND_TYPES } from './PlacesForm.consts'
 
+const { Option, OptGroup } = Select
+
 export const PlacesForm = React.memo(initialState => {
     const { setLoaderState } = useContext(LoaderContext)
     const [form] = Form.useForm()
@@ -106,11 +108,19 @@ export const PlacesForm = React.memo(initialState => {
                             name="type"
                             label="Тип легенды"
                         >
-                            <TreeSelect
+                            <Select
                                 showSearch
-                                treeData={LEGEND_TYPES}
-                                treeCheckable
-                            />
+                            >
+                                {LEGEND_TYPES.map(el => (
+                                    <OptGroup label={el.label} key={el.key}>
+                                        {el.children.map(type => (
+                                            <Option value={type.value} key={type.key}>
+                                                {type.label}
+                                            </Option>
+                                        ))}
+                                    </OptGroup>
+                                ))}
+                            </Select>
                         </Form.Item>
 
 
