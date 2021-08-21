@@ -63,7 +63,6 @@ export const PlacesPage = React.memo(() => {
 
             <Table
                 rowKey="id"
-                locale={{ emptyText: "Нет данных" }}
                 columns={PLACES_TABLE_COLUMNS}
                 dataSource={dictionary}
                 pagination={false}

@@ -6,130 +6,44 @@ export const LEGEND_TYPES = [{
     key: 'folklore',
     label: 'Уникальные образцы устного народного творчества, место бытования',
     children: [{
-        value: 'legend',
+        value: 'LEGEND',
         label: 'Легенда',
-        key: 'legend'
+        key: 'LEGEND'
     }, {
-        value: 'story',
+        value: 'STORY',
         label: 'Предание',
-        key: 'story'
+        key: 'STORY'
     }, {
-        value: 'tale',
+        value: 'TALE',
         label: 'Сказка',
-        key: 'tale'
+        key: 'TALE'
     }, {
-        value: 'bylichki',
+        value: 'BYLICHKI',
         label: 'Быличка',
-        key: 'bylichki'
+        key: 'BYLICHKI'
     }, {
-        value: 'folklore_other',
+        value: 'FOLKLORE_OTHER',
         label: 'Другое',
-        key: 'folklore_other'
+        key: 'FOLKLORE_OTHER'
     }]
 }, {
-    key: 'object',
+    key: 'objects',
     label: 'Уникальные природные объекты, место нахождения',
     children: [{
-        value: 'lake',
+        value: 'LAKE',
         label: 'Озеро',
-        key: 'lake'
+        key: 'LAKE'
     }, {
-        value: 'source',
+        value: 'SOURCE',
         label: 'Источник',
-        key: 'source'
+        key: 'SOURCE'
     }, {
-        value: 'stone',
+        value: 'STONE',
         label: 'Камень',
-        key: 'stone'
+        key: 'STONE'
     }, {
-        value: 'object_other',
+        value: 'OBJECT_OTHER',
         label: 'Другое',
-        key: 'object_other'
+        key: 'OBJECT_OTHER'
     }]
 }]
-
-export const CITIES = [{
-    value: '1',
-    label: 'Боровичи',
-    key: '1'
-},{
-    value: '2',
-    label: 'Валдай',
-    key: '2'
-},{
-    value: '3',
-    label: 'Великий Новгород',
-    key: '3'
-},{
-    value: '4',
-    label: 'Малая Вишера',
-    key: '4'
-},{
-    value: '5',
-    label: 'Окуловка',
-    key: '5'
-},{
-    value: '6',
-    label: 'Пестово',
-    key: '6'
-},{
-    value: '7',
-    label: 'Сольцы',
-    key: '7'
-},{
-    value: '8',
-    label: 'Старая Русса',
-    key: '8'
-},{
-    value: '9',
-    label: 'Холм',
-    key: '9'
-},{
-    value: '10',
-    label: 'Чудово',
-    key: '10'
-},{
-    value: '11',
-    label: 'Демянск',
-    key: '11'
-},{
-    value: '12',
-    label: 'Крестцы',
-    key: '12'
-},{
-    value: '13',
-    label: 'Кулотино',
-    key: '13'
-},{
-    value: '14',
-    label: 'Любытино',
-    key: '14'
-},{
-    value: '15',
-    label: 'Неболчи',
-    key: '15'
-},{
-    value: '16',
-    label: 'Панковка',
-    key: '16'
-},{
-    value: '17',
-    label: 'Парфино',
-    key: '17'
-},{
-    value: '18',
-    label: 'Пролетарий',
-    key: '18'
-},{
-    value: '19',
-    label: 'Угловка',
-    key: '19'
-},{
-    value: '20',
-    label: 'Хвойная',
-    key: '20'
-},{
-    value: '21',
-    label: 'Шимск',
-    key: '21'
-},]

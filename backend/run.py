@@ -4,8 +4,9 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from core.aiohttp import get_session
+from core.init_app import init_app
 from db.db import engine, metadata, database
-from routes import legends
+from routes import legends, municipalities
 
 metadata.create_all(engine)
 
@@ -15,6 +16,7 @@ app = FastAPI(title="Легенда API", root_path_in_servers=False)
 @app.on_event("startup")
 async def startup():
     await database.connect()
+    await init_app()
 
 
 @app.on_event("shutdown")
@@ -39,6 +41,7 @@ app.add_middleware(
 )
 
 app.include_router(legends)
+app.include_router(municipalities)
 
 if __name__ == "__main__":
     uvicorn.run("run:app", host="0.0.0.0", port=8000, reload=True)

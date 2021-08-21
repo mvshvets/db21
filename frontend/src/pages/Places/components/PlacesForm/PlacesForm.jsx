@@ -1,13 +1,14 @@
 import './PlacesForm.scss'
 
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { Button, Col, Form, Input, Row, Select } from 'antd'
+import { Button, Col, Form, Input, Modal, Row, Select, Upload } from 'antd'
 import { Link, useParams } from 'react-router-dom'
 import { LoaderContext } from '../../../../core/context'
 import { ROUTE_NAMES } from '../../../../routing/routeNames.const'
 import { PageContent, ContentTitle, ButtonsToolbar } from '../../../../shared/components'
-import { block, CITIES, LEGEND_TYPES } from './PlacesForm.consts'
-import { LegendsService } from '../../../../core/api'
+import { block, LEGEND_TYPES } from './PlacesForm.consts'
+import { LegendsService, MunicipalitiesService } from '../../../../core/api'
+import { UploadOutlined } from '@ant-design/icons'
 
 const { Option, OptGroup } = Select
 
@@ -16,8 +17,9 @@ export const PlacesForm = React.memo(initialState => {
     const [form] = Form.useForm()
     const { id } = useParams()
 
-    /** Начальные значения для формы создания мероприятия в режиме редактирования */
+    /** Начальные значения для формы создания легенды*/
     const [initialValuesForEdit, setInitialValuesForEdit] = useState(initialState)
+    const [municipalitiesData, setMunicipalitiesData] = useState()
 
     /**
      * Отправка формы на сервер
@@ -28,7 +30,11 @@ export const PlacesForm = React.memo(initialState => {
             try {
                 setLoaderState(true)
 
-                console.log(values)
+                await LegendsService.setLegend(values)
+
+                Modal.success({
+                    title: "Легенда успешно добавлена"
+                })
 
                 if (!initialValuesForEdit) {
                     form.resetFields()
@@ -41,6 +47,37 @@ export const PlacesForm = React.memo(initialState => {
         },
         [form, initialValuesForEdit, setLoaderState]
     )
+
+    /**
+     * Обработчик загрузки файла аудиогида
+     */
+    const handleUploadAttachment = useCallback(async ({ file, onSuccess, onError }) => {
+        try {
+            setLoaderState(true)
+
+            const upload = await LegendsService.uploadAudioFile({
+                file
+            })
+
+            onSuccess(upload, file)
+        } catch (e) {
+            onError(e)
+        } finally {
+            setLoaderState(false)
+        }
+    }, [setLoaderState])
+
+    /** Получаем справочник муниципалитетов */
+    useEffect(() => {
+        const fetchMunicipalities = async () => {
+            try {
+                setMunicipalitiesData(await MunicipalitiesService.getMunicipalities())
+            } catch (e) {
+                console.log(e)
+            }
+        }
+        fetchMunicipalities()
+    }, [])
 
     useEffect(() => {
         if (id) {
@@ -99,15 +136,73 @@ export const PlacesForm = React.memo(initialState => {
                 <Row gutter={20}>
                     <Col xs={12}>
                         <Form.Item
-                            name="municipality"
+                            name="name"
+                            label="Название легенды"
+                        >
+                            <Input/>
+                        </Form.Item>
+
+                        <Row gutter={20}>
+                            <Col xs={12}>
+                                <Form.Item
+                                    name="type"
+                                    label="Тип легенды"
+                                >
+                                    <Select virtual={false}>
+                                        {LEGEND_TYPES.map(el => (
+                                            <OptGroup label={el.label} key={el.key}>
+                                                {el.children.map(type => (
+                                                    <Option value={type.value}
+                                                            key={type.key}>
+                                                        {type.label}
+                                                    </Option>
+                                                ))}
+                                            </OptGroup>
+                                        ))}
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+
+                            <Col xs={12}>
+                                <Form.Item
+                                    name="audio_guide_id"
+                                    label="Файл для аудиогида"
+                                >
+                                    <Upload customRequest={handleUploadAttachment}
+                                            showUploadList={false}>
+                                        <Button icon={<UploadOutlined/>}>Прикрепить</Button>
+                                    </Upload>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+
+                        <Form.Item
+                            name="description"
+                            label="Описание"
+                        >
+                            <Input.TextArea
+                                autoSize={{ minRows: 9, maxRows: 9 }}/>
+                        </Form.Item>
+                    </Col>
+
+                    <Col xs={12}>
+                        <Form.Item
+                            name="municipality_id"
                             label="Муниципальное образование"
                         >
-                            <Select options={CITIES} showSearch/>
+                            <Select
+                                options={municipalitiesData?.map(el => ({
+                                    value: el.id,
+                                    key: el.id,
+                                    label: el.name
+                                }))}
+                                showSearch
+                            />
                         </Form.Item>
 
                         <Form.Item
                             name="informant"
-                            label="Сведения об информантах "
+                            label="Сведения об информантах"
                         >
                             <Input.TextArea autoSize={{ minRows: 5, maxRows: 5 }}/>
                         </Form.Item>
@@ -117,34 +212,6 @@ export const PlacesForm = React.memo(initialState => {
                             label="Подтверждающие документы"
                         >
                             <Input.TextArea autoSize={{ minRows: 5, maxRows: 5 }}/>
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={12}>
-                        <Form.Item
-                            name="type"
-                            label="Тип легенды"
-                        >
-                            <Select virtual={false}>
-                                {LEGEND_TYPES.map(el => (
-                                    <OptGroup label={el.label} key={el.key}>
-                                        {el.children.map(type => (
-                                            <Option value={type.value}
-                                                    key={type.key}>
-                                                {type.label}
-                                            </Option>
-                                        ))}
-                                    </OptGroup>
-                                ))}
-                            </Select>
-                        </Form.Item>
-
-                        <Form.Item
-                            name="description"
-                            label="Описание"
-                        >
-                            <Input.TextArea
-                                autoSize={{ minRows: 13, maxRows: 13 }}/>
                         </Form.Item>
                     </Col>
                 </Row>

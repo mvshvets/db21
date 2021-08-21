@@ -19,11 +19,13 @@ class LegendsTypes(str, Enum):
 class LegendDataModel(BaseModel):
     id: int
     create_date: int
+    name: str
     type: LegendsTypes
     description: str
     documents: Optional[str]
     informant: Optional[str]
     municipality_id: int
+    audio_guide_id: Optional[int]
 
     class Config:
         orm_mode = True
@@ -32,7 +34,7 @@ class LegendDataModel(BaseModel):
 class MunicipalityDataModel(BaseModel):
     id: int
     create_date: int
-    municipality: str
+    name: str
 
     class Config:
         orm_mode = True

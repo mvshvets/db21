@@ -64,15 +64,3 @@ class MunicipalityDB:
         items = await database.fetch_all(query)
         if len(items):
             return [MunicipalityDataModel(**item).dict() for item in items]
-
-    @classmethod
-    async def update(cls, **kwargs) -> int:
-        query = municipalities_table.update().where(municipalities_table.c.id == kwargs["id"]).values(kwargs).returning(legends_table)
-        user_id = await database.execute(query)
-        return user_id
-
-    @classmethod
-    async def delete(cls, item_id) -> MunicipalityDataModel or None:
-        query = municipalities_table.delete().where(municipalities_table.c.id == item_id).returning(municipalities_table)
-        item = await database.execute(query)
-        return MunicipalityDataModel(**item).dict() if item else None

@@ -18,7 +18,7 @@ export const renderServicesActions = (tableRow) => {
                 />
             </NavLink>
 
-            <Button icon={<DeleteOutlined/>}/>
+            <Button type="link" icon={<DeleteOutlined/>}/>
         </div>
     )
 }
