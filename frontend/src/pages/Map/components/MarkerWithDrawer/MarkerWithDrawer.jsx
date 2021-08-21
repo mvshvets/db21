@@ -1,8 +1,13 @@
+import './MarkerWithDrawer.scss'
+
 import React, { useState } from 'react'
 import { Marker } from 'react-leaflet'
 import { Drawer } from 'antd'
+import { LEGENDS_TYPES } from '../../../../shared/consts'
+import { block } from './MarkerWithDrawer.consts'
 
-export const MarkerWithDrawer = () => {
+/** Маркер с информационным давером */
+export const MarkerWithDrawer = ({name, type, description, lat, long, municipality, informant, documents}) => {
     const [visible, setVisible] = useState(false)
 
     const handleVisibleDrawer = () => {
@@ -10,20 +15,35 @@ export const MarkerWithDrawer = () => {
     }
 
     return (
-        <>
-            <Marker position={[51.505, -0.09]} eventHandlers={{ click: handleVisibleDrawer }}/>
+        <div className={block()}>
+            <Marker position={[lat, long]} eventHandlers={{ click: handleVisibleDrawer }}/>
 
             <Drawer
-                title="Описание достопримечательности"
+                title={name}
                 placement="left"
                 closable={false}
                 onClose={handleVisibleDrawer}
                 visible={visible}
+                className={block('info')}
             >
                 <div>
-                    Тут какое-то описание
+                    <h3>{`Тип: ${LEGENDS_TYPES[type]}`}</h3>
+                    <h3>{`Муниципалитет: ${municipality}`}</h3>
+                    <br/>
+                    <div>Сведения об информантах:</div>
+                    <div>{informant}</div>
+                    <br/>
+                    <div>Подтверждающие документы:</div>
+                    <div>{documents}</div>
+                    <br/>
+                    <br/>
+
+                    <div>Описание:</div>
+                    <div>{description}</div>
+
+
                 </div>
             </Drawer>
-        </>
+        </div>
     )
 }

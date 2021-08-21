@@ -26,6 +26,8 @@ class LegendDataModel(BaseModel):
     informant: Optional[str]
     municipality_id: int
     audio_guide_id: Optional[int]
+    lat: Optional[float]
+    long: Optional[float]
 
     class Config:
         orm_mode = True

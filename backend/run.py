@@ -10,7 +10,7 @@ from routes import legends, municipalities
 
 metadata.create_all(engine)
 
-app = FastAPI(title="Легенда API", root_path_in_servers=False)
+app = FastAPI(title="Струны Новгородчины API")
 
 
 @app.on_event("startup")

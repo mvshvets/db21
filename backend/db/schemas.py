@@ -14,6 +14,8 @@ legends_table = Table(
     Column("documents", Text),
     Column("informant", Text),
     Column("audio_guide_id", Integer),
+    Column("lat", FLOAT, nullable=False),
+    Column("long", FLOAT, nullable=False),
     Column("municipality_id", ForeignKey("municipalities.id"), nullable=False)
 )
 

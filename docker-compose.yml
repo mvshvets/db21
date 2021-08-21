@@ -23,7 +23,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    command: uvicorn run:app --host 0.0.0.0 --port 8000
+    command: uvicorn run:app --host 0.0.0.0 --port 8000 --root-path /api
     environment:
       - POSTGRES_LOGIN=lngwediprlrdlw
       - POSTGRES_PASSWORD=CgN2PHwaYmh@oO0K3BBK

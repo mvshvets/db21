@@ -6,7 +6,7 @@ from db.models import LegendsTypes, LegendDataModel
 
 
 class LegendResponseModel(LegendDataModel):
-    pass
+    municipality: str
 
 
 class LegendSaveRequestModel(BaseModel):
@@ -17,3 +17,5 @@ class LegendSaveRequestModel(BaseModel):
     informant: Optional[str]
     municipality_id: int
     audio_guide_id: Optional[int]
+    lat: float
+    long: float

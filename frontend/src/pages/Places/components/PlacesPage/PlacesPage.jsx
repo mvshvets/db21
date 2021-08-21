@@ -8,6 +8,7 @@ import { ContentTitle, PageContent, ButtonsToolbar } from '../../../../shared/co
 import { UploadOutlined } from '@ant-design/icons'
 import { LegendsService } from '../../../../core/api'
 
+/** Таблица легенд */
 export const PlacesPage = React.memo(() => {
     const { setLoaderState } = useContext(LoaderContext)
     const [dictionary, setDictionary] = useState([])

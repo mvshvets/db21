@@ -3,14 +3,17 @@
 .header {
     display: flex;
     justify-content: space-between;
+    background: #FAFAFA;
 
     &__logo {
-        color: #d0d0d0;
-
-        h1 {
-            font-size: 36px;
-            font-style: italic;
+        img {
+            width: 160px;
         }
+    }
+
+    .ant-menu {
+        background: #FAFAFA;
+        border-bottom: none;
     }
 
     a {

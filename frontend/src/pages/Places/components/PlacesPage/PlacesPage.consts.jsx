@@ -1,18 +1,7 @@
 import { renderServicesActions } from './PlacesPage.utils'
 import React from 'react'
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
-
-const LEGENDS_TYPES = {
-    LEGEND: 'Легенда',
-    STORY: 'Предание',
-    TALE: 'Сказка',
-    BYLICHKI: 'Быличка',
-    FOLKLORE_OTHER: 'Другой вид устного творчества',
-    LAKE: 'Озеро',
-    SOURCE: 'Источник',
-    STONE: 'Камень',
-    OBJECT_OTHER: 'Другой уникальный природный объект'
-}
+import { LEGENDS_TYPES } from '../../../../shared/consts'
 
 export const PLACES_TABLE_COLUMNS = [
     {

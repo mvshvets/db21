@@ -1,7 +1,7 @@
 import './PlacesForm.scss'
 
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { Button, Col, Form, Input, Modal, Row, Select, Upload } from 'antd'
+import { Button, Col, Form, Input, InputNumber, Modal, Row, Select, Upload } from 'antd'
 import { Link, useParams } from 'react-router-dom'
 import { LoaderContext } from '../../../../core/context'
 import { ROUTE_NAMES } from '../../../../routing/routeNames.const'
@@ -12,6 +12,7 @@ import { UploadOutlined } from '@ant-design/icons'
 
 const { Option, OptGroup } = Select
 
+/** Форма создания\редактирования легенды */
 export const PlacesForm = React.memo(initialState => {
     const { setLoaderState } = useContext(LoaderContext)
     const [form] = Form.useForm()
@@ -181,11 +182,42 @@ export const PlacesForm = React.memo(initialState => {
                             label="Описание"
                         >
                             <Input.TextArea
-                                autoSize={{ minRows: 9, maxRows: 9 }}/>
+                                autoSize={{ minRows: 11, maxRows: 11 }}/>
                         </Form.Item>
                     </Col>
 
                     <Col xs={12}>
+                        <Row gutter={20}>
+                            <Col xs={12}>
+                                <Form.Item
+                                    name="lat"
+                                    label="Широта"
+                                >
+                                    <InputNumber
+                                        placeholder={0.000}
+                                        step="0.001"
+                                        min={-90}
+                                        max={90}
+                                    />
+                                </Form.Item>
+                            </Col>
+
+                            <Col xs={12}>
+                                <Form.Item
+                                    name="long"
+                                    label="Долгота"
+                                >
+                                    <InputNumber
+                                        placeholder={0.000}
+                                        step="0.001"
+                                        min={-180}
+                                        max={180}
+                                    />
+                                </Form.Item>
+
+                            </Col>
+                        </Row>
+
                         <Form.Item
                             name="municipality_id"
                             label="Муниципальное образование"
@@ -204,14 +236,14 @@ export const PlacesForm = React.memo(initialState => {
                             name="informant"
                             label="Сведения об информантах"
                         >
-                            <Input.TextArea autoSize={{ minRows: 5, maxRows: 5 }}/>
+                            <Input.TextArea autoSize={{ minRows: 4, maxRows: 4 }}/>
                         </Form.Item>
 
                         <Form.Item
                             name="documents"
                             label="Подтверждающие документы"
                         >
-                            <Input.TextArea autoSize={{ minRows: 5, maxRows: 5 }}/>
+                            <Input.TextArea autoSize={{ minRows: 4, maxRows: 4 }}/>
                         </Form.Item>
                     </Col>
                 </Row>
