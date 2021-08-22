@@ -24,8 +24,6 @@ class Settings(BaseSettings):
             path=f"/{values.get('POSTGRES_DB') or ''}",
         )
 
-    MINIO_ROOT_USER: str
-    MINIO_ROOT_PASSWORD: str
     MINIO_HOST: str
     MINIO_PORT: int
     MINIO_DATABASE_URI: Optional[str] = None

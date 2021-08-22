@@ -38,8 +38,6 @@ services:
       - POSTGRES_HOST=db
       - POSTGRES_PORT=5432
       - POSTGRES_DB=postgres
-      - MINIO_ID=db21_access_key
-      - MINIO_PASSWORD=db21_secret_key
       - MINIO_HOST=minio
       - MINIO_PORT=9001
     depends_on:
