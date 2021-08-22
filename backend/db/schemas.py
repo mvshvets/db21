@@ -13,7 +13,7 @@ legends_table = Table(
     Column("description", Text),
     Column("documents", Text),
     Column("informant", Text),
-    Column("audio_guide_id", Integer),
+    Column("audio_guide_id", String),
     Column("lat", FLOAT),
     Column("long", FLOAT),
     Column("municipality_id", ForeignKey("municipalities.id"))

@@ -8,7 +8,7 @@ import { LoaderContext } from '../../../../core/context'
 import { ROUTE_NAMES } from '../../../../routing/routeNames.const'
 import { ContentTitle, PageContent, ButtonsToolbar } from '../../../../shared/components'
 import { UploadOutlined } from '@ant-design/icons'
-import { LegendsService } from '../../../../core/api'
+import { LegendsService, FilesService } from '../../../../core/api'
 
 /** Таблица легенд */
 export const PlacesPage = React.memo(() => {
@@ -37,7 +37,7 @@ export const PlacesPage = React.memo(() => {
         try {
             setLoaderState(true)
 
-            const upload = await LegendsService.uploadFile({
+            const upload = await FilesService.uploadFile({
                 file,
             })
 

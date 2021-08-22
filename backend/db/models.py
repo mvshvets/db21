@@ -25,7 +25,7 @@ class LegendDataModel(BaseModel):
     documents: Optional[str]
     informant: Optional[str]
     municipality_id: Optional[int]
-    audio_guide_id: Optional[int]
+    audio_guide_id: Optional[str]
     lat: Optional[float]
     long: Optional[float]
 

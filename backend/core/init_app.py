@@ -1,4 +1,6 @@
+from core.settings import get_settings
 from db.crud import MunicipalityDB
+from db.db import client
 
 municipalities = [
     {
@@ -87,6 +89,14 @@ async def init_db():
             await MunicipalityDB.create(name=item.get("name"), lat=item.get("lat"), long=item.get("long"))
 
 
+async def init_s3():
+    """Инициализация хранилища файлов при запуске приложения"""
+    bucket = client.bucket_exists("audioguides")
+    if not bucket:
+        client.make_bucket("audioguides")
+
+
 async def init_app():
     """Запуск функций при поднятии приложения"""
     await init_db()
+    await init_s3()

@@ -6,7 +6,7 @@ from starlette.middleware.cors import CORSMiddleware
 from core.aiohttp import get_session
 from core.init_app import init_app
 from db.db import engine, metadata, database
-from routes import legends, municipalities
+from routes import legends, municipalities, files
 
 metadata.create_all(engine)
 
@@ -42,6 +42,7 @@ app.add_middleware(
 
 app.include_router(legends)
 app.include_router(municipalities)
+app.include_router(files)
 
 if __name__ == "__main__":
     uvicorn.run("run:app", host="0.0.0.0", port=8000, reload=True)

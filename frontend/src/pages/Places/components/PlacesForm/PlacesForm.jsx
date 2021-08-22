@@ -7,7 +7,7 @@ import { LoaderContext } from '../../../../core/context'
 import { ROUTE_NAMES } from '../../../../routing/routeNames.const'
 import { PageContent, ContentTitle, ButtonsToolbar } from '../../../../shared/components'
 import { block, LEGEND_TYPES } from './PlacesForm.consts'
-import { LegendsService, MunicipalitiesService } from '../../../../core/api'
+import { LegendsService, MunicipalitiesService, FilesService } from '../../../../core/api'
 import { UploadOutlined } from '@ant-design/icons'
 
 const { Option, OptGroup } = Select
@@ -27,7 +27,7 @@ export const PlacesForm = React.memo(initialState => {
      * @param values значения формы
      */
     const handleFinish = useCallback(
-        async (values) => {
+        async ({ audio_guide, ...values }) => {
             try {
                 setLoaderState(true)
 
@@ -56,17 +56,17 @@ export const PlacesForm = React.memo(initialState => {
         try {
             setLoaderState(true)
 
-            const upload = await LegendsService.uploadAudioFile({
+            const upload = await FilesService.uploadAudioFile({
                 file
             })
-
+            form.setFieldsValue({ audio_guide_id: upload })
             onSuccess(upload, file)
         } catch (e) {
             onError(e)
         } finally {
             setLoaderState(false)
         }
-    }, [setLoaderState])
+    }, [setLoaderState, form])
 
     /** Получаем справочник муниципалитетов */
     useEffect(() => {
@@ -166,8 +166,16 @@ export const PlacesForm = React.memo(initialState => {
 
                             <Col xs={12}>
                                 <Form.Item
-                                    name="audio_guide_id"
+                                    name="audio_guide_id" hidden
+                                >
+                                    <Input/>
+                                </Form.Item>
+
+                                <Form.Item
+                                    name="audio_guide"
                                     label="Файл для аудиогида"
+                                    valuePropName="fileList"
+                                    getValueFromEvent={e => Array.isArray(e) ? e : e?.fileList}
                                 >
                                     <Upload customRequest={handleUploadAttachment}
                                             showUploadList={false}>

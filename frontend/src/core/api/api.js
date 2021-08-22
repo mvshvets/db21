@@ -10,13 +10,20 @@ export const LegendsService = {
 
     /** Сохранить легенду */
     setLegend: (data) => axiosInstance(instance.post('/legends/save', data)),
+}
 
+export const MunicipalitiesService = {
+    /** Получить список муниципалитетов */
+    getMunicipalities: () => axiosInstance(instance.get('/municipalities/get-all'))
+}
+
+export const FilesService = {
     /** Загрузка файла */
     uploadFile: (data) => {
         const formData = new FormData()
         formData.append('file', data.file)
 
-        return axiosInstance(instance.post('/legends/upload-file', formData))
+        return axiosInstance(instance.post('/files/upload', formData))
     },
 
     /** Загрузка файла для аудиогида */
@@ -24,11 +31,9 @@ export const LegendsService = {
         const formData = new FormData()
         formData.append('file', data.file)
 
-        return axiosInstance(instance.post('/legends/upload-audio-file', formData))
+        return axiosInstance(instance.post('/files/upload-audio/', formData))
     },
-}
 
-export const MunicipalitiesService = {
-    /** Получить список муниципалитетов */
-    getMunicipalities: () => axiosInstance(instance.get('/municipalities/get-all'))
+    /** Получить файла для аудиогида */
+    getAudioGuide: (data) => axiosInstance(instance.get(`/files/get/${data.id}`))
 }

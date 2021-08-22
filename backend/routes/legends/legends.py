@@ -1,9 +1,11 @@
 import io
 import re
+import uuid
 
 from fastapi import APIRouter, UploadFile, File
 from docx import Document
 from db.crud import LegendDB, MunicipalityDB
+from db.db import client
 from routes.legends.models import LegendResponseModel, LegendSaveRequestModel, types_list
 
 router = APIRouter(prefix="/legends", tags=["Legends"])
@@ -72,11 +74,17 @@ async def set_file(file: bytes = File(...)):
     return
 
 
-@router.post("/upload-audio-file", name="Загрузка файла для аудиогида")
-async def set_file(file: UploadFile = File(...)):
+@router.post("/upload-audio-file/{legend_id}", name="Загрузка файла для аудиогида")
+async def set_file(legend_id: int, file: UploadFile = File(...)):
     """ Загрузка файла для аудиогида """
-    contents = file.file
+    file_id = uuid.uuid4()
+    await LegendDB.update(id=legend_id, audio_guide_id=file_id)
+    client.fput_object("audioguides", file_id, file.file)
+    return
 
-    return {"filename": file.filename}
 
-
+@router.get("/get-audio-guide/{file_id}", name="Получить файла для аудиогида")
+def get_file(file_id: int):
+    """ Получить файла для аудиогида """
+    data = client.get_object("audioguides", file_id)
+    return data

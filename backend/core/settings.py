@@ -24,6 +24,18 @@ class Settings(BaseSettings):
             path=f"/{values.get('POSTGRES_DB') or ''}",
         )
 
+    MINIO_ROOT_USER: str
+    MINIO_ROOT_PASSWORD: str
+    MINIO_HOST: str
+    MINIO_PORT: int
+    MINIO_DATABASE_URI: Optional[str] = None
+
+    @validator("MINIO_DATABASE_URI", pre=True)
+    def assemble_s3_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
+        if isinstance(v, str):
+            return v
+        return f"{values.get('MINIO_HOST')}:{values.get('MINIO_PORT')}"
+
     class Config:
         env_file = ".env"
         case_sensitive = True

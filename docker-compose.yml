@@ -10,6 +10,14 @@ services:
       - POSTGRES_PASSWORD=CgN2PHwaYmh@oO0K3BBK
       - POSTGRES_DB=postgres
 
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    ports:
+      - "9001:9001"
+    volumes:
+      - minio:/data
+
   frontend:
     build:
       context: ./frontend
@@ -30,6 +38,13 @@ services:
       - POSTGRES_HOST=db
       - POSTGRES_PORT=5432
       - POSTGRES_DB=postgres
+      - MINIO_ID=db21_access_key
+      - MINIO_PASSWORD=db21_secret_key
+      - MINIO_HOST=minio
+      - MINIO_PORT=9001
     depends_on:
       - db
     restart: always
+
+volumes:
+  minio:
