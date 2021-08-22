@@ -30,3 +30,4 @@
 - sqlAlchemy 
 - docker-compose
 - AmazonWebService
+- Minio
